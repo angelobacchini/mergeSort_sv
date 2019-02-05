@@ -11,7 +11,7 @@ Top level module "sorter" provides 2 handshake based streaming interfaces for in
 * master does not have to wait until READY is asserted before asserting VALID, but once VALID is raised it must remain up until READY is asserted by the slave
 * FIRST and LAST are strobed by the master to signal the first and last sample in the packet. They are valid only if VALID is asserted at the same time.
 
-## architecure
+## architecture
 
 The implementation replicates the following code:
 ```python
@@ -62,5 +62,5 @@ def mySort(arr):
 ## testbench
 
 A self-checking tb is included in tb.sv:
-* NUM_RUNS (defined in global.svh) packets are generated and transmitted to the core. Each packet has a random lenght from 1 to MAX_NUM_SAMPLES
+* NUM_RUNS (defined in global.svh) packets are generated and transmitted to the core. Each packet has a random length from 1 to MAX_NUM_SAMPLES
 * The tb will check if the output packets sent by the core are sorted (output is compared with output from System Verilog array.sort() method)
