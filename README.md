@@ -64,3 +64,9 @@ def mySort(arr):
 A self-checking tb is included in tb.sv:
 * NUM_RUNS (defined in global.svh) packets are generated and transmitted to the core. Each packet has a random length from 1 to MAX_NUM_SAMPLES
 * The tb will check if the output packets sent by the core are sorted (output is compared with output from System Verilog array.sort() method)
+
+Compile and run with questa/modelsim:
+```
+vlog +acc=npr ./src/*.sv
+vsim work.tb -c -do "run -all"
+```      
