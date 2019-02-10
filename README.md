@@ -6,14 +6,14 @@ https://www.youtube.com/watch?v=lOUe8Q9jQow
 
 ## interface
 
-Top level module "sorter" provides 2 handshake based streaming interfaces for input samples (module act as a slave) and sorted output samples (module acts as a master). Handshake rules mimic the AXI4 stream specs:
+The top level module "sorter" includes 2 handshake based streaming interfaces for input samples (module act as a slave) and sorted output samples (module acts as a master). Handshake rules mimic the AXI4 stream specs:
 * a transfer occurs when both VALID (master driven) and READY (slave driven) are asserted
 * master does not have to wait until READY is asserted before asserting VALID, but once VALID is raised it must remain up until READY is asserted by the slave
 * FIRST and LAST are strobed by the master to signal the first and last sample in the packet. They are valid only if VALID is asserted at the same time.
 
 ## architecture
 
-The implementation replicates the following code:
+The merge-sort implementation replicates the following code:
 ```python
 def mySort(arr):
 
@@ -55,8 +55,8 @@ def mySort(arr):
 ```
 
 * The ping-pong buffers are implemented in block memories
-* The first level of sorting (sorting groups of two) is performed while reading samples from the input interface: every two read samples, the pair is written to the block memory in a sorted order
-* Samples are provided to the output interface in last level of sorting (no writing on the block memory occurs)
+* The first level of sorting (sorting groups of two) is performed while reading samples from the input interface: every two read samples, the pair is written to the ping-pong buffer in a sorted order
+* Samples are provided to the output interface in the last level of sorting (no ping-pong writing occurs for the last level)
 * Implementation supports a variable lenght of input samples (from 1 to MAX_NUM_SAMPLES defined in global.svh). The core can automatically detect the number of samples to sort from the FIRST and LAST signal on the input interface.
 
 ## testbench
